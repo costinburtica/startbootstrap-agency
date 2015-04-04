@@ -17,18 +17,21 @@ $(function() {
             if (firstName.indexOf(' ') >= 0) {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
-            $.ajax({
-                url: "././mail/contact_me.php",
+            $.post({
+                url: "https://api.mailjet.com/v3/send/message",
                 type: "POST",
+		dataType: "jsonp",
+		user: "dacdfb738b91020fdcc12432a01cbc07:06105284869f6d899041e5e1ff331353",
                 data: {
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    message: message
+                    from: "constantin.burtica@gmail.com",
+                    to: email,
+                    subject: 'Test',
+                    text: message
                 },
                 cache: false,
                 success: function() {
                     // Success message
+		    alert( "success" );
                     $('#success').html("<div class='alert alert-success'>");
                     $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
                         .append("</button>");
@@ -42,6 +45,7 @@ $(function() {
                 },
                 error: function() {
                     // Fail message
+		    alert( "fail" );
                     $('#success').html("<div class='alert alert-danger'>");
                     $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
                         .append("</button>");
